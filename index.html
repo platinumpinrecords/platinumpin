@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platinum Pin Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0c;
+    --ink-soft: #14141a;
+    --ink-card: #1a1a22;
+    --platinum: #e5e4e2;
+    --platinum-bright: #f5f4f0;
+    --silver: #a8a8b0;
+    --silver-dim: #6a6a72;
+    --accent: #c9a961;
+    --line: rgba(229, 228, 226, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--platinum);
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(201, 169, 97, 0.08), transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(229, 228, 226, 0.04), transparent 50%);
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1.5rem 3rem;
+    background: rgba(10, 10, 12, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--platinum-bright);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .logo-mark {
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--platinum-bright), var(--silver-dim));
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(229, 228, 226, 0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .tab-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--silver);
+    padding: 0.6rem 1.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 2px;
+  }
+
+  .tab-btn:hover {
+    color: var(--platinum-bright);
+    border-color: var(--line);
+  }
+
+  .tab-btn.active {
+    color: var(--ink);
+    background: var(--platinum-bright);
+    border-color: var(--platinum-bright);
+  }
+
+  /* Tab Content */
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HOME */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .hero-meta::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 11vw, 10rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--platinum-bright);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 .italic {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, var(--platinum-bright) 0%, var(--silver-dim) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-tagline {
+    font-size: 1.3rem;
+    color: var(--silver);
+    max-width: 540px;
+    margin-top: 2rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .hero-divider {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    right: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--silver-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* Sections */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--platinum-bright);
+    margin-bottom: 3rem;
+    max-width: 900px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--silver);
+  }
+
+  /* About grid */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--silver);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p:first-child::first-letter {
+    font-family: 'Fraunces', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    float: left;
+    line-height: 0.85;
+    margin: 0.3rem 0.6rem 0 0;
+    color: var(--platinum-bright);
+  }
+
+  .pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .pillar {
+    background: var(--ink-soft);
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: default;
+  }
+
+  .pillar:hover {
+    background: var(--ink-card);
+    transform: translateX(8px);
+  }
+
+  .pillar-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.8rem;
+  }
+
+  .pillar h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: var(--platinum-bright);
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+
+  .pillar p {
+    color: var(--silver);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* Stats marquee */
+  .marquee {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 2rem 0;
+    overflow: hidden;
+    margin: 4rem 0 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--silver-dim);
+  }
+
+  .marquee-track span {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .marquee-track span::after {
+    content: '✦';
+    color: var(--accent);
+    font-size: 1rem;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* B3LAC tab */
+  .artist-hero {
+    min-height: 100vh;
+    padding: 10rem 3rem 4rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .artist-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(4rem, 14vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--platinum-bright);
+    margin-bottom: 2rem;
+  }
+
+  .artist-name .stroke {
+    -webkit-text-stroke: 1px var(--platinum-bright);
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-style: italic;
+  }
+
+  .artist-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--silver);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+  }
+
+  .artist-visual {
+    aspect-ratio: 3/4;
+    background:
+      linear-gradient(135deg, transparent 30%, rgba(201, 169, 97, 0.15) 100%),
+      linear-gradient(45deg, var(--ink-card) 0%, var(--ink-soft) 100%);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .artist-visual::before {
+    content: 'B3';
+    position: absolute;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24rem;
+    font-weight: 300;
+    color: rgba(229, 228, 226, 0.04);
+    line-height: 0.8;
+    top: -2rem;
+    left: -2rem;
+  }
+
+  .artist-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(229, 228, 226, 0.02) 2px,
+      rgba(229, 228, 226, 0.02) 3px
+    );
+  }
+
+  .vinyl {
+    position: relative;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%,
+        var(--ink-soft) 0%,
+        var(--ink-soft) 18%,
+        transparent 18.5%,
+        transparent 19%,
+        var(--ink) 19%,
+        var(--ink) 100%);
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.6),
+      inset 0 0 0 1px rgba(229,228,226,0.08);
+    animation: spin 20s linear infinite;
+    z-index: 1;
+  }
+
+  .vinyl::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+      circle at center,
+      transparent 0,
+      transparent 3px,
+      rgba(229,228,226,0.04) 3px,
+      rgba(229,228,226,0.04) 4px
+    );
+  }
+
+  .vinyl::after {
+    content: 'B3LAC';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #8a6d3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Track list */
+  .tracks {
+    border-top: 1px solid var(--line);
+    margin-top: 4rem;
+  }
+
+  .track {
+    display: grid;
+    grid-template-columns: 60px 1fr auto auto;
+    gap: 2rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .track:hover {
+    padding-left: 1rem;
+    background: linear-gradient(90deg, var(--ink-soft) 0%, transparent 100%);
+  }
+
+  .track-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--silver-dim);
+    font-size: 0.85rem;
+  }
+
+  .track-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    color: var(--platinum-bright);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .track-title em {
+    font-style: italic;
+    color: var(--silver);
+  }
+
+  .track-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--silver-dim);
+    letter-spacing: 0.15em;
+  }
+
+  .track-duration {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--silver);
+    font-size: 0.85rem;
+  }
+
+  /* Roster cards */
+  .roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .roster-card {
+    border: 1px solid var(--line);
+    padding: 3rem 2rem;
+    background: var(--ink-soft);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roster-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+  }
+
+  .roster-card:hover::before { transform: scaleX(1); }
+
+  .roster-card:hover {
+    background: var(--ink-card);
+    transform: translateY(-4px);
+  }
+
+  .roster-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .roster-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: var(--platinum-bright);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .roster-genre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--silver-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-intro p {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--silver);
+  }
+
+  .contact-channels {
+    margin-top: 3rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .channel {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .channel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .channel-value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    color: var(--platinum-bright);
+    letter-spacing: -0.01em;
+  }
+
+  .contact-form {
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-row label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--silver-dim);
+  }
+
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    padding: 0.7rem 0;
+    color: var(--platinum-bright);
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    transition: border-color 0.3s ease;
+    outline: none;
+    resize: none;
+  }
+
+  .form-row select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a8a8b0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+  }
+
+  .form-row select option {
+    background: var(--ink-soft);
+    color: var(--platinum-bright);
+  }
+
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  .form-row input::placeholder,
+  .form-row textarea::placeholder {
+    color: var(--silver-dim);
+    font-style: italic;
+  }
+
+  .form-submit {
+    margin-top: 1rem;
+    background: var(--platinum-bright);
+    color: var(--ink);
+    border: none;
+    padding: 1.1rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    align-self: flex-start;
+  }
+
+  .form-submit:hover {
+    background: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .form-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    min-height: 1.2rem;
+  }
+
+  .form-status.success { color: #7fb685; }
+  .form-status.error { color: #c97f7f; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 3rem;
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--silver-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    nav { padding: 1rem 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .tabs { width: 100%; justify-content: center; }
+    .tab-btn { padding: 0.5rem 0.9rem; font-size: 0.65rem; }
+    section, .hero { padding: 5rem 1.5rem 3rem; }
+    .hero-divider { left: 1.5rem; right: 1.5rem; bottom: 1.5rem; flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-form { padding: 1.5rem; }
+    .artist-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 3rem; gap: 3rem; }
+    .track { grid-template-columns: 40px 1fr auto; gap: 1rem; }
+    .track-meta { display: none; }
+    footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <span class="logo-mark"></span>
+    Platinum Pin Records
+  </div>
+  <ul class="tabs">
+    <li><button class="tab-btn active" data-tab="home">Label</button></li>
+    <li><button class="tab-btn" data-tab="roster">Roster</button></li>
+    <li><button class="tab-btn" data-tab="b3lac">b3lac</button></li>
+    <li><button class="tab-btn" data-tab="contact">Contact</button></li>
+  </ul>
+</nav>
+
+<!-- HOME / LABEL -->
+<div class="tab-content active" id="home">
+  <header class="hero">
+    <div class="hero-meta">
+      <span>EST. NORTH TEXAS</span>
+      <span>INDEPENDENT IMPRINT</span>
+    </div>
+    <h1>Platinum<br>Pin <span class="italic">Records.</span></h1>
+    <p class="hero-tagline">An independent imprint built around carefully curated artists, deliberate releases, and the conviction that distribution should serve the music — not the other way around.</p>
+    <div class="hero-divider">
+      <span>← Scroll to explore</span>
+      <span>Vol. 01 / 2026</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">About the Label</div>
+    <h2 class="section-title">A small label with <em>uncompromising</em> standards for the artists it signs.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Platinum Pin Records is an independent label focused on developing distinctive voices in modern music. Founded with a long-term view rather than a quick-hit mentality, the imprint operates on the principle that great records take time, attention, and a team that actually listens.</p>
+        <p>The label handles distribution, brand development, and release strategy for its roster — currently led by flagship artist b3lac. Every release is treated as an artifact: considered packaging, considered timing, considered audience.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-num">01 / Curation</div>
+          <h3>Selective by design</h3>
+          <p>A small roster means each artist gets the attention their work deserves.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02 / Distribution</div>
+          <h3>Everywhere it counts</h3>
+          <p>Releases land on every major streaming platform with a unified release strategy.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03 / Identity</div>
+          <h3>Brand as a craft</h3>
+          <p>Visual language, naming, and rollout treated with the same care as the music itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>Independent</span>
+        <span>Curated</span>
+        <span>Distributed Globally</span>
+        <span>Artist-First</span>
+        <span>Platinum Pin Records</span>
+        <span>Independent</span>
+        <span>Curated</span>
+        <span>Distributed Globally</span>
+        <span>Artist-First</span>
+        <span>Platinum Pin Records</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Platinum Pin Records</span>
+    <span>All Rights Reserved</span>
+  </footer>
+</div>
+
+<!-- ROSTER -->
+<div class="tab-content" id="roster">
+  <section style="padding-top: 10rem;">
+    <div class="section-label">Current Roster</div>
+    <h2 class="section-title">The <em>artists</em> we work with.</h2>
+    <div class="roster">
+      <div class="roster-card">
+        <div class="roster-status">● ACTIVE — FLAGSHIP</div>
+        <div class="roster-name">b3lac</div>
+        <div class="roster-genre">Releasing Artist</div>
+      </div>
+      <div class="roster-card" style="opacity: 0.55;">
+        <div class="roster-status">○ SLOT OPEN</div>
+        <div class="roster-name" style="color: var(--silver-dim);">— —</div>
+        <div class="roster-genre">Submissions Considered</div>
+      </div>
+      <div class="roster-card" style="opacity: 0.55;">
+        <div class="roster-status">○ SLOT OPEN</div>
+        <div class="roster-name" style="color: var(--silver-dim);">— —</div>
+        <div class="roster-genre">Submissions Considered</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Platinum Pin Records</span>
+    <span>All Rights Reserved</span>
+  </footer>
+</div>
+
+<!-- B3LAC -->
+<div class="tab-content" id="b3lac">
+  <div class="artist-hero">
+    <div>
+      <div class="artist-tag">Flagship Artist · PPR-001</div>
+      <h1 class="artist-name">b3<span class="stroke">lac</span></h1>
+      <p class="artist-bio">b3lac is the flagship artist on Platinum Pin Records. With a sound that refuses easy categorization, b3lac builds tracks that reward repeat listening — layered production, intentional pacing, and the kind of detail you only catch on the third or fourth pass.</p>
+      <p class="artist-bio" style="margin-bottom: 0;">Distributed globally through the label's partnership with DistroKid. Available wherever you stream music.</p>
+    </div>
+    <div class="artist-visual">
+      <div class="vinyl"></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Discography</div>
+    <h2 class="section-title">Selected <em>releases</em>.</h2>
+    <div class="tracks">
+      <div class="track">
+        <div class="track-num">001</div>
+        <div>
+          <div class="track-title">Brand New Life</div>
+        </div>
+        <div class="track-meta">PPR · SINGLE</div>
+        <div class="track-duration">▶</div>
+      </div>
+      <div class="track">
+        <div class="track-num">002</div>
+        <div>
+          <div class="track-title">Slow Down</div>
+        </div>
+        <div class="track-meta">PPR · SINGLE</div>
+        <div class="track-duration">▶</div>
+      </div>
+      <div class="track">
+        <div class="track-num">003</div>
+        <div>
+          <div class="track-title">Over You</div>
+        </div>
+        <div class="track-meta">PPR · SINGLE</div>
+        <div class="track-duration">▶</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 4rem; padding: 2rem; border: 1px solid var(--line); background: var(--ink-soft);">
+      <div class="section-label" style="margin-bottom: 1rem;">Listen</div>
+      <p style="color: var(--silver); font-size: 1.05rem;">b3lac's catalog is available on Spotify, Apple Music, Tidal, Amazon Music, YouTube Music, and all major DSPs via DistroKid distribution.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Platinum Pin Records · b3lac</span>
+    <span>PPR-001</span>
+  </footer>
+</div>
+
+<!-- CONTACT -->
+<div class="tab-content" id="contact">
+  <section style="padding-top: 10rem;">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title">Let's <em>talk</em>.</h2>
+
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <p>For demo submissions, press inquiries, booking requests, or general questions about the label — reach out using the form, or contact us directly through the channels listed.</p>
+        <p style="margin-top: 1.5rem; color: var(--silver-dim); font-size: 0.95rem;">We listen to every demo. Response times vary, but we get to all of them.</p>
+
+        <div class="contact-channels">
+          <div class="channel">
+            <div class="channel-label">Label · Deals · Press</div>
+            <div class="channel-value">deals@platinumpinrecords.com</div>
+          </div>
+          <div class="channel">
+            <div class="channel-label">b3lac · Direct</div>
+            <div class="channel-value">b3lac@platinumpinrecords.com</div>
+          </div>
+          <div class="channel">
+            <div class="channel-label">Location</div>
+            <div class="channel-value">North Texas, USA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <form class="contact-form" id="contactForm">
+          <!-- Web3Forms access key — REPLACE THIS with your key from web3forms.com -->
+          <input type="hidden" name="access_key" value="42dfebff-7f1a-4bf0-9071-7480caa35354">
+          <input type="hidden" name="subject" value="New message from platinumpinrecords.com">
+          <input type="hidden" name="from_name" value="Platinum Pin Records">
+          <input type="checkbox" name="botcheck" style="display:none;">
+
+          <div class="form-row">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-row">
+            <label>Subject</label>
+            <select name="inquiry_type">
+              <option>Demo Submission</option>
+              <option>Press Inquiry</option>
+              <option>Booking</option>
+              <option>General</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Message</label>
+            <textarea name="message" rows="5" placeholder="Tell us what you're working on." required></textarea>
+          </div>
+          <button class="form-submit" type="submit">Send Message →</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Platinum Pin Records</span>
+    <span>All Rights Reserved</span>
+  </footer>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Contact form submission via Web3Forms
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Sending...';
+      status.className = 'form-status';
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const data = await response.json();
+        if (data.success) {
+          status.textContent = '✓ Message sent. We\'ll be in touch.';
+          status.className = 'form-status success';
+          form.reset();
+        } else {
+          status.textContent = '✗ Something went wrong. Try again or email us directly.';
+          status.className = 'form-status error';
+        }
+      } catch (err) {
+        status.textContent = '✗ Network error. Email us directly.';
+        status.className = 'form-status error';
+      }
+    });
+  }
+</script>
+</body>
+</html>
